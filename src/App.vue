@@ -17,11 +17,15 @@ onMounted(() => {
 })
 
 const fetchAdvice = async () => {
-  loading.value = true
+    loading.value = true
     const response = await axios.get("https://api.adviceslip.com/advice")
-    adviceObject.id = response.data.slip.id
-    adviceObject.advice = response.data.slip.advice
+
+    if (response.data.slip) {
+      adviceObject.id = response.data.slip.id
+      adviceObject.advice = response.data.slip.advice
+    } 
     loading.value = false
+    
 }
 </script>
 
@@ -35,7 +39,10 @@ const fetchAdvice = async () => {
        
         </div>
         <img src="./assets/pattern-divider-desktop.svg" class="desktop-divider"/>
-        <img src="./assets/pattern-divider-mobile.svg" class="mobile-divider"/>
+        <div class="mobile-divider-container">
+          <img src="./assets/pattern-divider-mobile.svg" class="mobile-divider"/>
+        </div>
+        
         
         <div class="dice" @click="fetchAdvice">
           <img src="./assets/icon-dice.svg" />
@@ -91,11 +98,15 @@ main {
   font-size: 30px;
   font-weight: 700;
   color: white;
+  overflow: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  height: 220px;
 }
 
 .dice {
   position: relative;
-  top: 110px;
+  top: 80px;
   background-color: #53FFAA;
   padding: 17px 15px 15px 15px;
   border-radius: 50%;
@@ -104,12 +115,6 @@ main {
   cursor: pointer;
 }
 
-.advice-container {
-  height: 220px;
-  overflow: scroll;
-  overflow-y: hidden; /* Hide vertical scrollbar */
-  overflow-x: hidden; /* Hide horizontal scrollbar */
-}
 
 .mobile-divider {
   display: none;
@@ -129,7 +134,8 @@ main {
 }
 @media only screen and (max-width: 500px) {
   .advice {
-    width: 300px;
+    width: 70%;
+    padding:  30px;
   }
 
   .desktop-divider {
@@ -141,8 +147,8 @@ main {
 }
 
 .dice {
-  left: 120px;
-  top: 80px;
+  left: 110px;
+  top: 60px;
 }
 
 .desktop-loader {
@@ -158,5 +164,11 @@ main {
   margin-bottom: 20px;
  
 }
+
+.mobile-divider-container {
+  display: flex;
+  justify-content: center;
+}
+
 }
 </style>
