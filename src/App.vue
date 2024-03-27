@@ -147,7 +147,7 @@ main {
 }
 
 .dice {
-  left: 110px;
+  left: 105px;
   top: 60px;
 }
 
